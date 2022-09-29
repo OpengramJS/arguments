@@ -1,0 +1,58 @@
+{
+  "name": "command-args",
+  "version": "0.0.1",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "lint": "eslint .",
+    "test": "ava",
+    "cover": "c8 npm test",
+    "precommit": "npm run lint && npm test && npm run remark",
+    "remark": "npx remark README.md --use remark-preset-lint-consistent --use remark-preset-lint-recommended",
+    "prepare": "husky install"
+  },
+  "files": [
+    "src/*.js",
+    "*.json"
+  ],
+  "engines": {
+    "node": ">=16.17"
+  },
+  "type": "commonjs",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OpengramJS/command-args.git"
+  },
+  "ava": {
+    "files": [
+      "test/*"
+    ]
+  },
+  "devDependencies": {
+    "ava": "^4.3.0",
+    "joi": "^17.6.1",
+    "@commitlint/cli": "^17.0.3",
+    "@commitlint/config-conventional": "^17.0.3",
+    "@jsdoc/eslint-config": "^1.1.6",
+    "eslint": "^8.18.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-ava": "^13.2.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsdoc": "^39.3.3",
+    "eslint-plugin-n": "^15.2.4",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-standard": "^5.0.0",
+    "husky": "^8.0.1",
+    "c8": "^7.12.0",
+    "remark-cli": "^10.0.1",
+    "remark-preset-lint-consistent": "^5.1.1",
+    "remark-preset-lint-recommended": "^6.1.2"
+  },
+  "author": "Maxim Tsialehin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/OpengramJS/command-args/issues"
+  },
+  "homepage": "https://github.com/OpengramJS/command-args#readme"
+}
