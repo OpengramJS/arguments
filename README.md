@@ -57,7 +57,7 @@ const Joi = require('joi')
 const arguments = require('@opengram/command-args')
   
 // Create middleware instance
-const addArgs = arguments({
+const sumArgs = arguments({
   mapping: ['first', 'second'], // First argument to "first" property, second to "second" property
   errorHandler: (err, ctx) => ctx.reply(`Invalid arguments: ${err.message}`), // Error handler for validation errors
   // Validation schema
@@ -73,7 +73,7 @@ const addArgs = arguments({
   })
 })
 
-bot.command('sum', addArgs, ctx => {
+bot.command('sum', sumArgs, ctx => {
   // Destructuring assignment from safe, validated object, with converted to number args
   const { first, second } = ctx.state.command.args
   // Send sum result
