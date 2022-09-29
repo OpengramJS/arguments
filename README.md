@@ -8,8 +8,8 @@ The arguments plugin lets you parse & validate arguments of commands with ease.
 </header>
 
 ## Features
-- [Joi](https://joi.dev/) validation support
-- Arguments remapping
+-   [Joi](https://joi.dev/) validation support
+-   Arguments remapping
 
 [codecov-image]: https://codecov.io/gh/OpengramJS/command-args/branch/master/graph/badge.svg?token=7SSVHV4Y6V
 [codecov-url]: https://codecov.io/gh/OpengramJS/command-args
