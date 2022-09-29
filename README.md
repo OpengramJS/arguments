@@ -50,5 +50,35 @@ pnpm add @opengram/command-args
 ## Quick start
 
 ```js
-xxx
+const { Opengram } = require('opengram')
+const bot = new Opengram(process.env.BOT_TOKEN)
+
+const Joi = require('joi')
+const arguments = require('@opengram/command-args')
+  
+// Create middleware instance
+const addArgs = arguments({
+  mapping: ['first', 'second'], // First argument to "first" property, second to "second" property
+  errorHandler: (err, ctx) => ctx.reply(`Invalid arguments: ${err.message}`), // Error handler for validation errors
+  // Validation schema
+  schema: Joi.object({
+    first: Joi
+      .number()
+      .integer()
+      .required(),
+    second: Joi
+      .number()
+      .integer()
+      .required()
+  })
+})
+
+bot.command('sum', addArgs, ctx => {
+  // Destructuring assignment from safe, validated object, with converted to number args
+  const { first, second } = ctx.state.command.args
+  // Send sum result
+  return ctx.replyWithHTML(`<b>Result:</b> ${first + second}`)
+})
+
+bot.launch()
 ```
