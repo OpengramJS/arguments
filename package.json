@@ -1,7 +1,7 @@
 {
-  "name": "command-args",
+  "name": "@opengram/command-args",
   "version": "0.0.1",
-  "description": "",
+  "description": "The arguments plugin lets you parse & validate arguments of commands with ease.",
   "main": "src/index.js",
   "scripts": {
     "lint": "eslint .",
@@ -54,5 +54,12 @@
   "bugs": {
     "url": "https://github.com/OpengramJS/command-args/issues"
   },
-  "homepage": "https://github.com/OpengramJS/command-args#readme"
+  "homepage": "https://github.com/OpengramJS/command-args#readme",
+  "keywords": [
+    "opengram",
+    "telegraf",
+    "opengram-command-parts",
+    "opengram-args",
+    "opengram-arguments"
+  ]
 }
