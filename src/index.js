@@ -6,14 +6,33 @@ const joiConfig = {
 }
 
 /**
- * @param {object} ctx Context object
- * @param {function} next
- * @returns {function}
+ * @typedef {array<'message'|'channel_post'>} allowedUpdates List of allowed updates
  */
 
+/**
+ *
+ * @typedef {object} initParams Init parameters
+ * @property {array} [mapping] Allows you remap argument index to object property name
+ * @property {object} [schema] Joi validation schema
+ * @property {object} [config] Joi configuration object
+ * @property {function} [errorHandler] Error handler for catching Joi validation errors
+ * @property {allowedUpdates} [allowedUpdates] List of allowed updates
+ */
+
+/**
+ * Middleware factory function
+ * @param {initParams} [parameters]
+ * @return {function}
+ */
 function argumentsParserFactory (parameters = {}) {
   const { mapping = [], schema, config, errorHandler, allowedUpdates = ['message', 'channel_post'] } = parameters
 
+  /**
+   * Middleware for parsing & validating command arguments
+   * @param {object} ctx Context object
+   * @param {function} next
+   * @returns {function}
+   */
   return (ctx, next) => {
     const { updateType } = ctx
     if (
