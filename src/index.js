@@ -11,14 +11,15 @@ const joiConfig = {
  * @returns {function}
  */
 
-module.exports = function argumentsParserFactory (parameters = {}) {
-  const { mapping = [], schema, config, errorHandler } = parameters
+function argumentsParserFactory (parameters = {}) {
+  const { mapping = [], schema, config, errorHandler, allowedUpdates = ['message', 'channel_post'] } = parameters
 
   return (ctx, next) => {
+    const { updateType } = ctx
     if (
-      ctx.updateType !== 'message' ||
+      !(allowedUpdates.includes(updateType)) ||
       !ctx.updateSubTypes.includes('text') ||
-      ctx.message.entities?.[0].type !== 'bot_command'
+      ctx[updateType].entities?.[0].type !== 'bot_command'
     ) {
       return next()
     }
@@ -27,7 +28,7 @@ module.exports = function argumentsParserFactory (parameters = {}) {
     let args = []
     let command
 
-    const text = ctx.message.text
+    const text = ctx[updateType].text
     const match = text.match(/^\/(\S+)\s?(.+)?/)
 
     if (match !== null) {
@@ -76,3 +77,5 @@ module.exports = function argumentsParserFactory (parameters = {}) {
     return next()
   }
 }
+
+module.exports = argumentsParserFactory
