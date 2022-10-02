@@ -34,7 +34,7 @@ test('should remap arguments', async t => {
 })
 
 test('should remap and validate arguments', async t => {
-  const { command, context } = createContext()
+  const { context } = createContext()
 
   const schema = Joi.object({
     firstArg: Joi.string()

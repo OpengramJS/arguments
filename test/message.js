@@ -22,7 +22,7 @@ function createContext () {
 }
 
 test('should parse arguments', async t => {
-  const { command, context } = createContext()
+  const { context } = createContext()
 
   const middleware = args()
   middleware(context, Function.prototype)
@@ -31,7 +31,7 @@ test('should parse arguments', async t => {
 })
 
 test('should remap arguments', async t => {
-  const { command, context } = createContext()
+  const { context } = createContext()
 
   const middleware = args({ mapping: ['firstArg', 'secondArg'] })
   middleware(context, Function.prototype)
@@ -41,7 +41,7 @@ test('should remap arguments', async t => {
 })
 
 test('should remap and validate arguments', async t => {
-  const { command, context } = createContext()
+  const { context } = createContext()
 
   const schema = Joi.object({
     firstArg: Joi.string()
