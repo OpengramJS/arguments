@@ -3,17 +3,17 @@ const args = require('../src')
 const Joi = require('joi')
 const { ValidationError } = require('joi')
 
-function createContext () {
-  const command = '/start first second'
+function createContext (text, start, end) {
+  const command = text ?? '/start first second'
   const context = {
-    updateType: 'channel_post',
+    updateType: 'message',
     updateSubTypes: ['text'],
     state: {},
-    channel_post: {
+    message: {
       text: command,
       entities: [{
-        offset: 0,
-        length: 6,
+        offset: start ?? 0,
+        length: end ?? 6,
         type: 'bot_command'
       }]
     }
@@ -21,13 +21,14 @@ function createContext () {
   return { context, command }
 }
 
-test('should parse arguments', async t => {
-  const { context } = createContext()
+test('should not throw when args not given', async t => {
+  const { context } = createContext('/start')
 
   const middleware = args()
   middleware(context, Function.prototype)
 
-  t.deepEqual(context.state.args.raw, ['first', 'second'])
+  t.deepEqual(context.state.args.result, {})
+  t.deepEqual(context.state.args.raw, [])
 })
 
 test('should remap arguments', async t => {

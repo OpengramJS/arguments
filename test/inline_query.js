@@ -3,8 +3,8 @@ const args = require('../src')
 const Joi = require('joi')
 const { ValidationError } = require('joi')
 
-function createContext () {
-  const query = 'first second'
+function createContext (queryText) {
+  const query = queryText ?? 'first second'
   const context = {
     updateType: 'inline_query',
     updateSubTypes: [],
@@ -16,12 +16,14 @@ function createContext () {
   return { context, query }
 }
 
-test('should parse arguments', async t => {
-  const { context } = createContext()
+test('should not throw when args not given', async t => {
+  const { context, query } = createContext('')
 
   const middleware = args()
   middleware(context, Function.prototype)
-  t.deepEqual(context.state.args.raw, ['first', 'second'])
+
+  t.deepEqual(context.state.args.result, {})
+  t.deepEqual(context.state.args.raw, [])
 })
 
 test('should remap arguments', async t => {

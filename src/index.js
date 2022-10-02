@@ -54,7 +54,7 @@ function argumentsParserFactory (parameters = {}) {
       args = text.split(' ')
     } else {
       const match = text.match(/^\/(?:\S+)\s?(.+)?/) ?? ctx[updateType].query
-      if (match !== null) {
+      if (match !== null && match[1] !== undefined) {
         args = match[1].split(' ')
       }
     }
