@@ -5,19 +5,25 @@ const { ValidationError } = require('joi')
 
 function createContext (queryText) {
   const query = queryText ?? 'first second'
-  const context = {
-    updateType: 'inline_query',
-    updateSubTypes: [],
-    state: {},
+
+  const update = {
     inline_query: {
       query
     }
   }
+
+  const context = {
+    updateType: 'inline_query',
+    updateSubTypes: [],
+    state: {},
+    update
+  }
+
   return { context, query }
 }
 
 test('should not throw when args not given', async t => {
-  const { context, query } = createContext('')
+  const { context } = createContext('')
 
   const middleware = args()
   middleware(context, Function.prototype)

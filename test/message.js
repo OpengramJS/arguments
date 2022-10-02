@@ -5,10 +5,8 @@ const { ValidationError } = require('joi')
 
 function createContext (text, start, end) {
   const command = text ?? '/start first second'
-  const context = {
-    updateType: 'message',
-    updateSubTypes: ['text'],
-    state: {},
+
+  const update = {
     message: {
       text: command,
       entities: [{
@@ -17,6 +15,13 @@ function createContext (text, start, end) {
         type: 'bot_command'
       }]
     }
+  }
+
+  const context = {
+    updateType: 'message',
+    updateSubTypes: ['text'],
+    state: {},
+    update
   }
   return { context, command }
 }
