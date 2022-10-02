@@ -6,7 +6,7 @@ const joiConfig = {
 }
 
 /**
- * @typedef {array<'message'|'channel_post'>} allowedUpdates List of allowed updates
+ * @typedef {array<'message'|'channel_post'|'inline_query'>} allowedUpdates List of allowed updates
  */
 
 /**
