@@ -40,7 +40,7 @@ function argumentsParserFactory (parameters = {}) {
       !allowedUpdates.includes(updateType) ||
       (
         (
-          !ctx.updateSubTypes.includes('text') ||
+          !update[updateType].text ||
           update[updateType].entities?.[0].type !== 'bot_command'
         ) && update[updateType].query === undefined
       )
