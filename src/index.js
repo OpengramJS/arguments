@@ -34,13 +34,15 @@ function argumentsParserFactory (parameters = {}) {
    * @returns {function}
    */
   return (ctx, next) => {
-    const { updateType } = ctx
+    const { updateType, update } = ctx
 
     if (
-      !(allowedUpdates.includes(updateType)) ||
+      !allowedUpdates.includes(updateType) ||
       (
-        (!ctx.updateSubTypes.includes('text') && ctx[updateType].entities?.[0].type !== 'bot_command') &&
-        (ctx[updateType].query === undefined)
+        (
+          !ctx.updateSubTypes.includes('text') ||
+          update[updateType].entities?.[0].type !== 'bot_command'
+        ) && update[updateType].query === undefined
       )
     ) {
       return next()
@@ -48,12 +50,13 @@ function argumentsParserFactory (parameters = {}) {
 
     let remapped = {}
     let args = []
-    const text = ctx[updateType].text ?? ctx[updateType].query
+    const text = update[updateType].text ?? update[updateType].query
 
     if (updateType === 'inline_query' && text) {
       args = text.split(' ')
     } else {
-      const match = text.match(/^\/(?:\S+)\s?(.+)?/) ?? ctx[updateType].query
+      const match = text.match(/^\/\S+\s?(.+)?/) ?? update[updateType].query
+
       if (match !== null && match[1] !== undefined) {
         args = match[1].split(' ')
       }
