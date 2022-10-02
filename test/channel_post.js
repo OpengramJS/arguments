@@ -19,7 +19,7 @@ function createContext (text, start, end) {
 
   const context = {
     updateType: 'message',
-    updateSubTypes: ['text'],
+    updateSubTypes: [],
     state: {},
     update
   }
