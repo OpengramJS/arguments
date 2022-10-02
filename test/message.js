@@ -26,9 +26,8 @@ test('should parse arguments', async t => {
 
   const middleware = args()
   middleware(context, Function.prototype)
-  t.is(context.state.command.raw, command)
-  t.is(context.state.command.name, 'start')
-  t.deepEqual(context.state.command.rawArgs, ['first', 'second'])
+
+  t.deepEqual(context.state.args.raw, ['first', 'second'])
 })
 
 test('should remap arguments', async t => {
@@ -36,10 +35,9 @@ test('should remap arguments', async t => {
 
   const middleware = args({ mapping: ['firstArg', 'secondArg'] })
   middleware(context, Function.prototype)
-  t.is(context.state.command.raw, command)
-  t.is(context.state.command.name, 'start')
-  t.deepEqual(context.state.command.rawArgs, ['first', 'second'])
-  t.deepEqual(context.state.command.args, { firstArg: 'first', secondArg: 'second' })
+
+  t.deepEqual(context.state.args.raw, ['first', 'second'])
+  t.deepEqual(context.state.args.result, { firstArg: 'first', secondArg: 'second' })
 })
 
 test('should remap and validate arguments', async t => {
@@ -57,10 +55,8 @@ test('should remap and validate arguments', async t => {
   const middleware = args({ mapping: ['firstArg', 'secondArg'], schema })
   middleware(context, Function.prototype)
 
-  t.is(context.state.command.raw, command)
-  t.is(context.state.command.name, 'start')
-  t.deepEqual(context.state.command.rawArgs, ['first', 'second'])
-  t.deepEqual(context.state.command.args, { firstArg: 'first', secondArg: 'second' })
+  t.deepEqual(context.state.args.raw, ['first', 'second'])
+  t.deepEqual(context.state.args.result, { firstArg: 'first', secondArg: 'second' })
 })
 
 test('should remap and throw error when validation failed', async t => {

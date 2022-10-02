@@ -25,7 +25,7 @@ const joiConfig = {
  * @return {function}
  */
 function argumentsParserFactory (parameters = {}) {
-  const { mapping = [], schema, config, errorHandler, allowedUpdates = ['message', 'channel_post'] } = parameters
+  const { mapping = [], schema, config, errorHandler, allowedUpdates = ['message', 'channel_post', 'inline_query'] } = parameters
 
   /**
    * Middleware for parsing & validating command arguments
@@ -35,29 +35,27 @@ function argumentsParserFactory (parameters = {}) {
    */
   return (ctx, next) => {
     const { updateType } = ctx
+
     if (
       !(allowedUpdates.includes(updateType)) ||
-      !ctx.updateSubTypes.includes('text') ||
-      ctx[updateType].entities?.[0].type !== 'bot_command'
+      (
+        ( !ctx.updateSubTypes.includes('text') && ctx[updateType].entities?.[0].type !== 'bot_command' ) &&
+        (ctx[updateType].query === undefined)
+      )
     ) {
       return next()
     }
 
     let remapped = {}
     let args = []
-    let command
+    const text = ctx[updateType].text ?? ctx[updateType].query
 
-    const text = ctx[updateType].text
-    const match = text.match(/^\/(\S+)\s?(.+)?/)
-
-    if (match !== null) {
-      const [, commandPart, argsPart] = match
-      if (commandPart) {
-        command = commandPart
-      }
-
-      if (argsPart) {
-        args = argsPart.split(' ')
+    if (updateType === 'inline_query' && text) {
+      args = text.split(' ')
+    } else {
+      const match = text.match(/^\/(?:\S+)\s?(.+)?/) ?? ctx[updateType].query
+      if (match !== null) {
+        args = match[1].split(' ')
       }
     }
 
@@ -86,11 +84,9 @@ function argumentsParserFactory (parameters = {}) {
       remapped = value
     }
 
-    ctx.state.command = {
-      raw: text,
-      name: command,
-      rawArgs: args,
-      args: remapped
+    ctx.state.args = {
+      raw: args,
+      result: remapped
     }
 
     return next()

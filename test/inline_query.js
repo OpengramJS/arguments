@@ -4,38 +4,31 @@ const Joi = require('joi')
 const { ValidationError } = require('joi')
 
 function createContext () {
-  const command = '/start first second'
+  const query = 'first second'
   const context = {
-    updateType: 'channel_post',
-    updateSubTypes: ['text'],
+    updateType: 'inline_query',
+    updateSubTypes: [],
     state: {},
-    channel_post: {
-      text: command,
-      entities: [{
-        offset: 0,
-        length: 6,
-        type: 'bot_command'
-      }]
+    inline_query: {
+      query
     }
   }
-  return { context, command }
+  return { context, query }
 }
 
 test('should parse arguments', async t => {
-  const { command, context } = createContext()
+  const { context } = createContext()
 
   const middleware = args()
   middleware(context, Function.prototype)
-
   t.deepEqual(context.state.args.raw, ['first', 'second'])
 })
 
 test('should remap arguments', async t => {
-  const { command, context } = createContext()
+  const { context } = createContext()
 
   const middleware = args({ mapping: ['firstArg', 'secondArg'] })
   middleware(context, Function.prototype)
-
   t.deepEqual(context.state.args.raw, ['first', 'second'])
   t.deepEqual(context.state.args.result, { firstArg: 'first', secondArg: 'second' })
 })
