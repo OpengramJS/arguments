@@ -1,3 +1,5 @@
+const { Composer } = require('opengram')
+
 // Default config
 const joiConfig = {
   convert: true,
@@ -31,20 +33,11 @@ function argumentsParserFactory (parameters = {}) {
    * Middleware for parsing & validating command arguments
    * @param {object} ctx Context object
    * @param {function} next
-   * @returns {function}
    */
-  return (ctx, next) => {
+  const middeware = (ctx, next) => {
     const { updateType, update } = ctx
 
-    if (
-      !allowedUpdates.includes(updateType) ||
-      (
-        (
-          !update[updateType].text ||
-          update[updateType].entities?.[0].type !== 'bot_command'
-        ) && update[updateType].query === undefined
-      )
-    ) {
+    if ((!ctx.anyText || ctx.anyEntities?.[0].type !== 'bot_command') && update[updateType].query === undefined) {
       return next()
     }
 
@@ -94,6 +87,8 @@ function argumentsParserFactory (parameters = {}) {
 
     return next()
   }
+
+  return Composer.mount(allowedUpdates, middeware)
 }
 
 module.exports = argumentsParserFactory
