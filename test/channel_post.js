@@ -8,7 +8,7 @@ function createContext (text, start, end) {
   const command = text ?? '/start first second'
 
   const context = new Context({
-    message: {
+    channel_post: {
       text: command,
       entities: [{
         offset: start ?? 0,
