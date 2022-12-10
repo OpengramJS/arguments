@@ -31,7 +31,7 @@ function argumentsParserFactory (parameters = {}) {
 
   /**
    * Middleware for parsing & validating command arguments
-   * @param {object} ctx Context object
+   * @param {OpengramContext} ctx Context object
    * @param {function} next
    */
   const middeware = (ctx, next) => {
