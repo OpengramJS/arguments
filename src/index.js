@@ -49,12 +49,14 @@ function argumentsParserFactory (parameters = {}) {
     if ((ctx.anyText && ctx.anyEntities?.[0]?.type === 'bot_command') || update[updateType].query !== undefined) {
       const text = update[updateType].text ?? update[updateType].query
 
-      if (updateType === 'inline_query' && text) {
-        args = text.split(' ')
+      if (updateType === 'inline_query') {
+        if (text) {
+          args = text.split(' ')
+        }
       } else {
-        const match = text.match(/^\/\S+\s?(.+)?/) ?? update[updateType].query
+        const match = text.match(/^\/\S+\s?(.+)?/)
 
-        if (match?.[1] !== undefined) {
+        if (match[1] !== undefined) {
           args = match[1].split(' ')
         }
       }
