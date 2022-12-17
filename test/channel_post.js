@@ -2,27 +2,28 @@ const test = require('ava')
 const args = require('../src')
 const Joi = require('joi')
 const { ValidationError } = require('joi')
-const { Context, Telegram, Composer } = require('opengram')
-
-function createContext (text, start, end) {
-  const command = text ?? '/start first second'
-
-  const context = new Context({
-    channel_post: {
-      text: command,
-      entities: [{
-        offset: start ?? 0,
-        length: end ?? 6,
-        type: 'bot_command'
-      }]
-    }
-  }, new Telegram('TOKEN', {}), { channelMode: false })
-
-  return { context, command }
-}
+const { Composer } = require('opengram')
+const { createContext } = require('./utils')
 
 test('should not throw when args not given', async t => {
-  const { context } = createContext('/start')
+  const { context } = createContext({
+    text: '/start',
+    type: 'channel_post'
+  })
+
+  const middleware = args()
+  await middleware(context, Composer.safePassThru())
+
+  t.deepEqual(context.state.args.result, {})
+  t.deepEqual(context.state.args.raw, [])
+})
+
+test('should not throw when command entities not given', async t => {
+  const { context } = createContext({
+    text: 'text',
+    entities: false,
+    type: 'channel_post'
+  })
 
   const middleware = args()
   await middleware(context, Composer.safePassThru())
@@ -32,7 +33,9 @@ test('should not throw when args not given', async t => {
 })
 
 test('should remap arguments', async t => {
-  const { context } = createContext()
+  const { context } = createContext({
+    type: 'channel_post'
+  })
 
   const middleware = args({ mapping: ['firstArg', 'secondArg'] })
   await middleware(context, Composer.safePassThru())
@@ -42,7 +45,9 @@ test('should remap arguments', async t => {
 })
 
 test('should remap and validate arguments', async t => {
-  const { context } = createContext()
+  const { context } = createContext({
+    type: 'channel_post'
+  })
 
   const schema = Joi.object({
     firstArg: Joi.string()
@@ -61,7 +66,9 @@ test('should remap and validate arguments', async t => {
 })
 
 test('should remap and throw error when validation failed', async t => {
-  const { context } = createContext()
+  const { context } = createContext({
+    type: 'channel_post'
+  })
 
   const schema = Joi.object({
     firstArg: Joi.string()
@@ -80,7 +87,9 @@ test('should remap and throw error when validation failed', async t => {
 
 test('should call errorHandler when validate failed', async t => {
   t.plan(3)
-  const { context } = createContext()
+  const { context } = createContext({
+    type: 'channel_post'
+  })
 
   const schema = Joi.object({
     firstArg: Joi.string()
