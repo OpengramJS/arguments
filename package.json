@@ -30,7 +30,7 @@
     ]
   },
   "devDependencies": {
-    "opengram": "^0.0.1-beta.2",
+    "opengram": "^0.1.0",
     "ava": "^4.3.0",
     "joi": "^17.7.0",
     "@commitlint/cli": "^17.0.3",
