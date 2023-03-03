@@ -70,6 +70,24 @@ bot.command('sum', sumArgs, ctx => {
 bot.launch()
 ```
 
+# Flowchart
+
+```mermaid
+flowchart TB
+  U("Incoming update") --> M("Upstream middlewares")
+  M --> F("Filter by given update types")
+  F --> E("Has command entity?")
+  E -- No --> N("Nothing to do, run next")
+  E -- Yes --> Parsing --> HV("Need mapping?")
+  HV -- No --> K
+  HV -- Yes --> Mapping --> NV("Need validation?")
+  NV -- No --> K
+  NV -- Yes --> VC("Validate / cast") --> ISV("Valid?")
+  ISV -- Yes --> K
+  ISV -- No --> ER("Error handler")
+  K("Add result to <code>ctx.state</code> and run next") --> DM("Downstream middlewares")
+```
+
 ## License
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FOpengramJS%2Farguments.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FOpengramJS%2Farguments?ref=badge_large)
 
@@ -87,6 +105,5 @@ bot.launch()
 [downloads-url]: https://npmjs.com/package/@opengram/arguments
 [standard-image]: https://img.shields.io/badge/code_style-standard-brightgreen.svg
 [standard-url]: https://standardjs.com
-
 [fossa-image]: https://app.fossa.com/api/projects/git%2Bgithub.com%2FOpengramJS%2Farguments.svg?type=shield
 [fossa-url]: https://app.fossa.com/projects/git%2Bgithub.com%2FOpengramJS%2Farguments?ref=badge_shield
