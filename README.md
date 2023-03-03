@@ -4,7 +4,8 @@
 
 The arguments plugin lets you parse & validate arguments of commands / inline query with ease.
 
-[![CI][ci-image]][ci-url] [![codecov][codecov-image]][codecov-url] [![npm][npm-image]][npm-url] [![downloads][downloads-image]][downloads-url] [![javascript style guide][standard-image]][standard-url] [![Codacy Badge][codacy-image]][codacy-url] [![License: MIT][license-image]][license-url]
+[![CI][ci-image]][ci-url] [![codecov][codecov-image]][codecov-url] [![npm][npm-image]][npm-url] [![downloads][downloads-image]][downloads-url] [![javascript style guide][standard-image]][standard-url] [![Codacy Badge][codacy-image]][codacy-url] [![License: MIT][license-image]][license-url] [![FOSSA Status][fossa-image]][fossa-url]
+
 </header>
 
 ## Features
@@ -69,6 +70,9 @@ bot.command('sum', sumArgs, ctx => {
 bot.launch()
 ```
 
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FOpengramJS%2Farguments.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FOpengramJS%2Farguments?ref=badge_large)
+
 [codecov-image]: https://codecov.io/gh/OpengramJS/arguments/branch/master/graph/badge.svg?token=7SSVHV4Y6V
 [codecov-url]: https://codecov.io/gh/OpengramJS/arguments
 [license-image]: https://img.shields.io/badge/License-MIT-yellow.svg
@@ -83,3 +87,6 @@ bot.launch()
 [downloads-url]: https://npmjs.com/package/@opengram/arguments
 [standard-image]: https://img.shields.io/badge/code_style-standard-brightgreen.svg
 [standard-url]: https://standardjs.com
+
+[fossa-image]: https://app.fossa.com/api/projects/git%2Bgithub.com%2FOpengramJS%2Farguments.svg?type=shield
+[fossa-url]: https://app.fossa.com/projects/git%2Bgithub.com%2FOpengramJS%2Farguments?ref=badge_shield
