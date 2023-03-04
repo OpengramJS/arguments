@@ -15,7 +15,7 @@ The arguments plugin lets you parse & validate arguments of commands / inline qu
 
 ## Docs
 
-You can find documentation [here](arguments.opengram.dev) and examples [here](https://github.com/OpengramJS/arguments/tree/master/examples)
+You can find documentation [here](arguments.opengram.dev) and examples [here](https://github.com/OpengramJS/arguments/tree/master/examples) and try now [here](https://replit.com/team/Opengram)
 
 ## Installation
 
